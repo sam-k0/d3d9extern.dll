@@ -39,14 +39,14 @@
 #define gmx extern "C" __declspec(dllexport)
 
 /* Define GameMaker Booleans */
-#define gmtrue 1.0;
-#define gmfalse 0.0;
+#define GMTRUE 1.0;
+#define GMFALSE 0.0;
 
 /* Define GameMaker datatypes*/
-typedef double gmint;               // Integer for GM
+typedef double GMINT;               // Integer for GM
 typedef const char* stringToDLL;    // String passed GM --> DLL
 typedef char* stringFromDLL;        // String passed DLL -- > GM
-typedef double gmbool;              // Datatype for GM Boolean
+typedef double GMBOOL;              // Datatype for GM Boolean
 
 /* Regular includes */
 #include <string>
