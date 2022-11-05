@@ -159,6 +159,7 @@
   <ItemGroup>
     <ClInclude Include="framework.h" />
     <ClInclude Include="gms.h" />
+    <ClInclude Include="mybitmaps.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
