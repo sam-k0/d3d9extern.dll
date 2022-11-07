@@ -20,7 +20,7 @@ struct TextureItems
 };
 
 LPD3DXFONT pFont = NULL;
-LPDIRECT3DDEVICE9 pDevice = NULL;
+LPDIRECT3DDEVICE9 pDevice = NULL; // The Window Device handle
 TextureItems myTexture; // Daniel Jung
 
 std::vector<TextureItems*> textures;
@@ -59,7 +59,9 @@ void DrawImage(int x, int y, TextureItems* textureItems)
     DrawTexture(x, y, textureItems->imagetex, textureItems->sprite);
 }
 
-
+/*
+    Adds an image from given filepath to the vector of TexureItems
+*/
 int AddImageFromFile(LPCSTR filename)
 {
     TextureItems* tex = new TextureItems();
@@ -81,6 +83,14 @@ int AddImageFromFile(LPCSTR filename)
     textures.push_back(tex);
     return textures.size() - 1;
 }
+
+int FreeTexture(int pos)
+{
+    textures.at(pos)->imagetex->Release();
+    textures.at(pos)->sprite->Release();
+    return S_OK;
+}
+
 // DLLEXPORT
 
 gmx GMBOOL initialize(stringToDLL handle)
