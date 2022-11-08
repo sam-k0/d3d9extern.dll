@@ -1,23 +1,23 @@
 // dllmain.cpp : Defines the entry point for the DLL application.
 #include "pch.h"
-#include <d3d9.h>
+#include "textureitems.h"
+
+//#include <d3d9.h>
 #include <windows.h>
 #include <d3d9.h>
-#include <d3dx9.h>
+
 #include <stdio.h>
 #include <string>
 #include "gms.h"
 #include <iostream>
 #include "mybitmaps.h"
 #include <vector>
+
 #pragma comment(lib, "d3d9.lib")
 #pragma comment(lib, "d3dx9.lib")
 
-struct TextureItems
-{
-    LPDIRECT3DTEXTURE9 imagetex = nullptr; //textute our image will be loaded into
-    LPD3DXSPRITE sprite = nullptr; //sprite to display our image
-};
+
+
 
 LPD3DXFONT pFont = NULL;
 LPDIRECT3DDEVICE9 pDevice = NULL; // The Window Device handle
@@ -84,16 +84,27 @@ int AddImageFromFile(LPCSTR filename)
     return textures.size() - 1;
 }
 
-int FreeTexture(int pos)
+bool FreeTexture(int pos)
 {
-    textures.at(pos)->imagetex->Release();
-    textures.at(pos)->sprite->Release();
-    return S_OK;
+    TextureItems* ti = textures.at(pos);
+    if (!ti::ok(ti))
+    {
+        return false;
+    }
+
+    if (FAILED(ti->imagetex->Release()) || FAILED(ti->sprite->Release()))
+    {
+        return false;
+    }
+    textures.at(pos)->imagetex = nullptr;
+    textures.at(pos)->sprite = nullptr;
+
+    return true;
 }
 
 // DLLEXPORT
 
-gmx GMBOOL initialize(stringToDLL handle)
+gmx GMBOOL dx9_initialize(stringToDLL handle)
 {
     if (pDevice == NULL)
     {
@@ -113,6 +124,7 @@ gmx GMBOOL initialize(stringToDLL handle)
     return GMTRUE;
 }
 
+// unused
 gmx GMBOOL dx9_load_from_mem() // Unused pls, switch to adding them to the vec
 {
     if (FAILED(D3DXCreateTextureFromFileInMemory(pDevice, &bmDaniel, sizeof(bmDaniel), &myTexture.imagetex)))
@@ -134,8 +146,6 @@ gmx GMBOOL dx9_set_handle(stringToDLL handle)
     return GMTRUE;
 }
 
-// Maybe theres a more efficient way to get the handle other than passing it every frame... 
-// AFAIK the device handle only changes on window change, similar as to surfaces??
 gmx GMBOOL dx9_draw_text( stringToDLL text, GMINT dx, GMINT dy)
 {
     WriteText(pDevice, (INT)dx, (INT)80, D3DCOLOR_ARGB(255, 255, 000, 000),gmu::string_to_charptr(gmu::constcharptr_to_string(text)));      
@@ -152,6 +162,10 @@ gmx GMBOOL dx9_draw_image(GMINT dx, GMINT dy, GMINT imageid)
     return GMTRUE;
 }
 
+gmx GMBOOL dx9_free_image(GMINT imageid)
+{
+    return GMBOOL(FreeTexture(imageid));
+}
 
 // DLLENTRY
 BOOL WINAPI DllMain(HINSTANCE hModule, DWORD dwReason, LPVOID lpvReserved)

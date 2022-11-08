@@ -27,6 +27,9 @@
     <ClInclude Include="mybitmaps.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="textureitems.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">

@@ -100,6 +100,9 @@
       <EnableUAC>false</EnableUAC>
       <AdditionalDependencies>d3dx9.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>copy /Y "$(TargetDir)$(TargetName).dll" "C:\Users\Samuel\Documents\GameMaker\Projects\DLLInjectionCheck.gmx\extensions\dx\d3d9hook.dll"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -121,6 +124,9 @@
       <EnableUAC>false</EnableUAC>
       <AdditionalDependencies>d3dx9.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>copy /Y "$(TargetDir)$(TargetName).dll" "C:\Users\Samuel\Documents\GameMaker\Projects\DLLInjectionCheck.gmx\extensions\dx\d3d9hook.dll"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -161,6 +167,7 @@
     <ClInclude Include="gms.h" />
     <ClInclude Include="mybitmaps.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="textureitems.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
