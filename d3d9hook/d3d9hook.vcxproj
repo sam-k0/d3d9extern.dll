@@ -167,6 +167,7 @@
     <ClInclude Include="gms.h" />
     <ClInclude Include="mybitmaps.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="shadercompile.h" />
     <ClInclude Include="textureitems.h" />
   </ItemGroup>
   <ItemGroup>

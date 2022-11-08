@@ -18,12 +18,12 @@
 
 
 
-
+// DLL-global scope variables
 LPD3DXFONT pFont = NULL;
 LPDIRECT3DDEVICE9 pDevice = NULL; // The Window Device handle
 TextureItems myTexture; // Daniel Jung
 
-std::vector<TextureItems*> textures;
+std::vector<TextureItems*> textures; // stores all texture items
 
 /* DX functions */
 VOID WriteText(LPDIRECT3DDEVICE9 pDevice, INT x, INT y, DWORD color, CHAR* text)
