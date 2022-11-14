@@ -167,6 +167,18 @@ gmx GMBOOL dx9_free_image(GMINT imageid)
     return GMBOOL(FreeTexture(imageid));
 }
 
+// Performance testing 
+// Draws an image 1.000.000 times
+gmx GMBOOL dx9_masstest(GMINT dx, GMINT dy, GMINT imageid)
+{
+    for (int i = 0; i < 1000000; i++)
+    {
+        dx9_draw_image(dx, dy, imageid);
+    }
+    
+    return GMTRUE;
+}
+
 // DLLENTRY
 BOOL WINAPI DllMain(HINSTANCE hModule, DWORD dwReason, LPVOID lpvReserved)
 {
