@@ -4,7 +4,12 @@ Allows for drawing text and images onto a D3D9Device.
 
 Depending on `DirectX SDK June 2010`
 
-# Performance
+# Use case
+
+This is primarily intended to be used with GML, but I'm sure it can be used for any DX9 game with some tinkering.
+
+
+# Performance (in GMS 1.4)
 
 - Worse than expected.
 - Done in VM mode.
