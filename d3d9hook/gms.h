@@ -98,4 +98,6 @@ namespace gmu {
 	}
 
 };
+
+
 #endif // AMOGUS_H_INCLUDED

@@ -1,6 +1,7 @@
 // dllmain.cpp : Defines the entry point for the DLL application.
 #include "pch.h"
 #include "textureitems.h"
+#include "vertexformat.h"
 
 //#include <d3d9.h>
 #include <windows.h>
@@ -177,6 +178,39 @@ gmx GMBOOL dx9_masstest(GMINT dx, GMINT dy, GMINT imageid)
     }
     
     return GMTRUE;
+}
+
+// Other tests
+
+gmx GMBOOL dx9_draw_triangle()
+{
+    CUSTOMVERTEX triangle[] =
+    {
+        {320.0f, 50.0f, 1.0f, 1.0f, D3DCOLOR_XRGB(0,0,255)},
+        {520.0f, 400.0f, 1.0f, 1.0f, D3DCOLOR_XRGB(0,255,0)},
+        {120.0f, 400.0f, 1.0f, 1.0f, D3DCOLOR_XRGB(255,0,0)}
+    };
+
+    LPDIRECT3DVERTEXBUFFER9 vbuf;
+
+    pDevice->CreateVertexBuffer(3 * sizeof(CUSTOMVERTEX),
+        0,
+        CUSTOMFVF,
+        D3DPOOL_MANAGED,
+        &vbuf,
+        NULL);
+    
+    VOID* pVoid;
+
+    vbuf->Lock(0, 0, (void**)&pVoid, 0);
+    memcpy(pVoid, triangle, sizeof(triangle));
+    vbuf->Unlock();
+
+    pDevice->SetFVF(CUSTOMFVF);
+    pDevice->SetStreamSource(0, vbuf, 0, sizeof(CUSTOMVERTEX));
+    pDevice->DrawPrimitive(D3DPT_TRIANGLELIST, 0, 1);
+
+    return TRUE;
 }
 
 // DLLENTRY
