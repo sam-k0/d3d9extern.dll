@@ -142,8 +142,7 @@ void YYVideoPlayer::grabFrame(int avitype, LONG lsize, PAVISTREAM &pStream)
 		lpbi = (LPBITMAPINFOHEADER)AVIStreamGetFrame(pgf, lFrame);
 
 		// DISPLAY TO SCREEN HERE
-
-
+		
 	}
 
 }

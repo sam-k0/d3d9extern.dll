@@ -28,7 +28,8 @@ class CAviTexture{
 
     public:  
         LPDIRECT3DTEXTURE9 GetTexture() { return m_pTexture; } 
-        
+        void SetTexture(LPDIRECT3DTEXTURE9 tex) { m_pTexture = tex; }
+
         void Open(LPDIRECT3DDEVICE9 pDevice, LPCSTR szFile);
         void Close();  
         void Update(float frameTime); 

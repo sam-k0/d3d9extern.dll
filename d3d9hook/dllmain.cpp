@@ -3,6 +3,8 @@
 #include "textureitems.h"
 #include "vertexformat.h"
 
+#include "YYAviPlayer.h"
+
 //#include <d3d9.h>
 #include <windows.h>
 #include <d3d9.h>
@@ -23,8 +25,13 @@
 LPD3DXFONT pFont = NULL;
 LPDIRECT3DDEVICE9 pDevice = NULL; // The Window Device handle
 TextureItems myTexture; // Daniel Jung
+LPDIRECT3DTEXTURE9 AviTexture = NULL;
 
 std::vector<TextureItems*> textures; // stores all texture items
+
+// AVI player
+CAviTexture* aviPlayer = nullptr;
+
 
 /* DX functions */
 VOID WriteText(LPDIRECT3DDEVICE9 pDevice, INT x, INT y, DWORD color, CHAR* text)
@@ -210,7 +217,51 @@ gmx GMBOOL dx9_draw_triangle()
     pDevice->SetStreamSource(0, vbuf, 0, sizeof(CUSTOMVERTEX));
     pDevice->DrawPrimitive(D3DPT_TRIANGLELIST, 0, 1);
 
-    return TRUE;
+    return GMTRUE;
+}
+
+// Avi player
+
+gmx GMBOOL avi_init(stringToDLL path)
+{
+    if (aviPlayer)return GMFALSE;
+
+    aviPlayer = new CAviTexture();
+
+    cout << "Trying to open aviplayer with path " << path << endl;
+
+    path = "C:\\Users\\Samuel\\Documents\\GameMaker\\Projects\\YYVideoPlayerGMX.gmx\\datafiles\\test.avi";
+
+    if (FAILED(pDevice->CreateTexture(512, 512, 0, D3DUSAGE_AUTOGENMIPMAP, D3DFMT_X8R8G8B8, D3DPOOL_MANAGED, &AviTexture, NULL)))
+    {
+        cout << "Failed to create tex" << endl;
+    }
+    else
+    {
+        cout << "Success create tex" << endl;
+    }
+
+    aviPlayer->SetTexture(AviTexture);
+
+    aviPlayer->Open(pDevice , path );
+
+    return GMTRUE;
+}
+
+gmx GMBOOL avi_update(GMINT passedMillis)
+{
+    cout << "Updating.." << endl;
+    aviPlayer->Update(passedMillis);
+    cout << "post update" << endl;
+    return GMTRUE;
+}
+
+gmx GMBOOL avi_draw(GMINT x, GMINT y, GMINT w, GMINT h)
+{
+    cout << "draw!" << endl;
+    aviPlayer->Draw(pDevice, x, y, w, h);
+    cout << "post draw" << endl;
+    return GMTRUE;
 }
 
 // DLLENTRY

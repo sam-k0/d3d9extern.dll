@@ -2,7 +2,7 @@
 #include <Vfw.h>
 #include <string>
 #include <iostream>
-
+#include <d3d9.h>
 #define YYAVI_AUDIO 1
 #define YYAVI_VIDEO 2
 #define YYAVI_OK 0
@@ -20,6 +20,7 @@ private:
 	AVISTREAMINFO sAudioInfo; // Allocated in initStream
 	AVISTREAMINFO sVideoInfo; // Allocated in initStream
 
+	LPDIRECT3DTEXTURE9 m_pTexture;
 	// Flags
 	bool done = false;
 	bool cleaned = false;
