@@ -1,8 +1,10 @@
 # d3d9extern.dll
 
 Allows for drawing text and images onto a D3D9Device.
+(Soon also videos I hope!)
 
-Depending on `DirectX SDK June 2010`
+Depending on `DirectX SDK June 2010`, `DirectShow` and some other libs from Microsoft
+## The Video Player does NOT work yet!
 
 # Use case
 
