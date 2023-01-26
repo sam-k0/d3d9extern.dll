@@ -26,6 +26,7 @@ LPD3DXFONT pFont = NULL;
 LPDIRECT3DDEVICE9 pDevice = NULL; // The Window Device handle
 TextureItems myTexture; // Daniel Jung
 LPDIRECT3DTEXTURE9 AviTexture = NULL;
+LPD3DXSPRITE AviSprite = NULL;
 
 std::vector<TextureItems*> textures; // stores all texture items
 
@@ -226,12 +227,6 @@ gmx GMBOOL avi_init(stringToDLL path)
 {
     if (aviPlayer)return GMFALSE;
 
-    aviPlayer = new CAviTexture();
-
-    cout << "Trying to open aviplayer with path " << path << endl;
-
-    path = "C:\\Users\\Samuel\\Documents\\GameMaker\\Projects\\YYVideoPlayerGMX.gmx\\datafiles\\test.avi";
-
     if (FAILED(pDevice->CreateTexture(512, 512, 0, D3DUSAGE_AUTOGENMIPMAP, D3DFMT_X8R8G8B8, D3DPOOL_MANAGED, &AviTexture, NULL)))
     {
         cout << "Failed to create tex" << endl;
@@ -241,7 +236,20 @@ gmx GMBOOL avi_init(stringToDLL path)
         cout << "Success create tex" << endl;
     }
 
+    if (FAILED(D3DXCreateSprite(pDevice, &AviSprite)))
+    {
+        gmu::debugmessage("Failed to create Sprite");
+    }
+
+    aviPlayer = new CAviTexture();
+
+    path = "C:\\Users\\Samuel\\Documents\\GameMaker\\Projects\\YYVideoPlayerGMX.gmx\\datafiles\\test.avi";
+
+    cout << "Trying to open aviplayer with path " << path << endl;
+
+
     aviPlayer->SetTexture(AviTexture);
+
 
     aviPlayer->Open(pDevice , path );
 
@@ -259,7 +267,21 @@ gmx GMBOOL avi_update(GMINT passedMillis)
 gmx GMBOOL avi_draw(GMINT x, GMINT y, GMINT w, GMINT h)
 {
     cout << "draw!" << endl;
+
+    gmu::debugmessage("Set the device texture!");
+    //viPlayer->SetTexture(pDevice);
+    
+    gmu::debugmessage("Drawing the texture!");
     aviPlayer->Draw(pDevice, x, y, w, h);
+  
+    // Allow use of alpha values
+    AviSprite->Begin(D3DXSPRITE_ALPHABLEND);
+
+    D3DXVECTOR3 pos = D3DXVECTOR3(x, y, 0.0f);
+    AviSprite->Draw(AviTexture, NULL, NULL, &pos, 0xFFFFFFFF);
+
+    AviSprite->End();
+
     cout << "post draw" << endl;
     return GMTRUE;
 }

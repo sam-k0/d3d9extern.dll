@@ -23,6 +23,7 @@ class CAviTexture{
     unsigned short* m_pData; 
     HDRAWDIB m_hdd;  
     LPDIRECT3DTEXTURE9 m_pTexture;
+
     int m_next; 
     int m_frame;
 

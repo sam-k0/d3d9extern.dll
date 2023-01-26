@@ -11,6 +11,10 @@ void CAviTexture::Open(LPDIRECT3DDEVICE9 pDevice, LPCSTR szFile)
 	AVIStreamInfo(m_pavi, &m_si, sizeof(m_si)); 
 	// Prepare to decompress video frames 
 	m_pgf = AVIStreamGetFrameOpen(m_pavi, NULL); 
+	if (!m_pgf)
+	{
+		std::cout << "ERROR in Open: AVIStreamGetFrameOpen!" << std::endl;
+	}
 	// Get the width and height 
 	m_width = m_si.rcFrame.right - m_si.rcFrame.left;  m_height = m_si.rcFrame.bottom - m_si.rcFrame.top;  
 	// Get the last frame of the stream 
@@ -87,7 +91,7 @@ void CAviTexture::Update(float frameTime){
 	pgf = AVIStreamGetFrameOpen(m_pavi, NULL);
 	if (!pgf)
 	{
-		//debug("Error in AVIStreamGetFrameOpen!");
+		std::cout << ("Error in AVIStreamGetFrameOpen!") << std::endl;
 		return;
 	}
 
@@ -101,7 +105,6 @@ void CAviTexture::Update(float frameTime){
 		std::cout << "lframe: " << lFrame  << "endt " << lEndTime << std::endl;
 
 	}
-	
 	else return;// the video is done
 	// Get data from the AVI Stream  
 
@@ -129,7 +132,8 @@ void CAviTexture::Update(float frameTime){
 		// Copy this row of pixels 
 		memcpy( pDestData, pSrcData, 512 * sizeof( DWORD ) );   
 		// Skip past row of pixels
-		pDestData += ( rect.Pitch / 4 );    pSrcData += 512; 
+		pDestData += ( rect.Pitch / 4 );   
+		pSrcData += 512; 
 	} 
 	// Unlock the texture buffer  
 	m_pTexture->UnlockRect(0);
